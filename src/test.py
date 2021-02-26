@@ -4,7 +4,7 @@ from dbutils import conn_impala
 cfg=configparser.ConfigParser()
 cfg.read('anteater-debug.ini')
 
-server=cfg['impala'].getstring['server']
+server=cfg['impala']['server']
 print(server)
 port=cfg['impala'].getint('port')
 print(port)
