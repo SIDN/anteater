@@ -11,6 +11,6 @@ def conn_impala(server,port,ssl,auth):
         return impala.dbapi.connect(host=server, port=port, use_ssl=ssl,auth_mechanism=auth)
     except:
         e = sys.exc_info()[0]
-        print("Error in connectImpala: " + e)
+        print("Error in connectImpala: " + str(e))
 
 
