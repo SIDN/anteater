@@ -10,3 +10,8 @@ ssl=cfg['impala'].getboolean('use_ssl')
 auth=cfg['impala']['auth_mechanism']
 
 conn=conn_impala(server,port,ssl,auth)
+
+print(conn)
+
+conn.close()
+print(conn)
