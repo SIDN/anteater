@@ -6,7 +6,6 @@ import logging
 import sys
 
 def conn_impala(server1,port1,ssl1,auth1):
-    conn=''
     try:
         return impala.dbapi.connect(host=server1, port=port1, use_ssl=ssl1,auth_mechanism=auth1)
     except:
