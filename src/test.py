@@ -11,7 +11,7 @@ auth=cfg['impala']['auth_mechanism']
 
 conn=conn_impala(server,port,ssl,auth)
 
-print(conn)
+print(str(conn))
 
 conn.close()
-print(conn)
+print(str(conn))
