@@ -10,7 +10,7 @@ port=cfg['impala'].getint('port')
 print(port)
 ssl=cfg['impala'].getboolean('use_ssl')
 print(ssl)
-auth=cfg['impala'].getstring['auth_mechanism']
+auth=cfg['impala']['auth_mechanism']
 print(auth)
 conn=conn_impala(server,port,ssl,auth)
 
