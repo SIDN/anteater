@@ -33,7 +33,8 @@ def server_stats(pars):
     ts2 = timestamp + ((hour - import_dealy_hours + bin_size) * 3600)
 
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
-    query = ''' select server,ipv, count(1) as  nqueries,avg(tcp_hs_rtt) from '''
+    query = ''' select server,ipv, count(1) as  nqueries, count(distinct(src)) as resolvers,
+            count(distinct(asn)) as asn, avg(tcp_hs_rtt) from '''
     query = query + entrada_db_table + " where year="
     query = query + str(year) + " AND  month=" + str(month) + " and  day=" + str(day)
     query = query + " and time between " + str(ts1 * 1000) + " and " + str(ts2 * 1000) + "  group by server, ipv;"
@@ -77,10 +78,12 @@ def store_server_stats(arrayResults):
                 server = sp[1]
                 ipv = sp[2]
                 queries = int(sp[3])
-                rtt = float(sp[4])
+                resolvers=int(sp[4])
+                ases=int(sp[5])
+                rtt = float(sp[6])
 
-                query = " INSERT INTO authserver (epoch_time, server_name, ipv,nqueries, avg_rtt) " \
-                        "VALUES (%s, %s, %s, %s, %s)"
+                query = " INSERT INTO authserver (epoch_time, server_name, ipv,nqueries, resolers,ases, avg_rtt) " \
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 print(query)
                 #print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
                 cur.execute(query, (ts, server, ipv, queries, rtt))

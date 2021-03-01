@@ -23,6 +23,8 @@ CREATE TABLE authserver (
     server_name character varying(20) NOT NULL,
     ipv integer NOT NULL,
     nqueries integer NOT NULL,
+    resolvers integer NOT NULL,
+    ases integer NOT NULL
     avg_rtt numeric(5,2)
 );
 
