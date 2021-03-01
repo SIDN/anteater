@@ -142,7 +142,9 @@ def run_query(entradaQuery, pars):
 
 
 def main(pars):
+    print("starting to pull stats per server data from ENTRADA")
     results = server_stats(pars)
+    print("starting to store start per server data on  Postgresql")
     store = store_server_stats(results)
 
 
