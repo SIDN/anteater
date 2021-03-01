@@ -82,7 +82,7 @@ def store_server_stats(arrayResults):
                 query = " INSERT INTO authserver (epoch_time, server_name, ipv,nqueries, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s)"
                 print(query)
-                print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
+                #print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
                 cur.execute(query, (ts, server, ipv, queries, rtt))
 
                 conn.commit()
