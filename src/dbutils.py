@@ -9,7 +9,7 @@ import configparser
 def conn_impala():
     pars=read_ini()
     server1=pars['impala']['server']
-    port1=pars['impala']['port']
+    port1=pars['impala'].getint('port')
     use_ssl1=['impala']['use_ssl']
     auth_mechanism1=['impala']['auth_mechanism']
 
@@ -24,7 +24,7 @@ def conn_postgresql():
     pars=read_ini()
     host1=pars['postgresql']['host']
     database1=pars['postgresql']['database']
-    port1=['postgresql']['port']
+    port1=['postgresql'].getint('port')
     user1=['postgresql']['username']
     password1=['postgresql']['password']
 

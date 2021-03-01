@@ -24,8 +24,8 @@ def server_stats(pars):
 
     # so this variables define the chunk of data to be analyzed
     # from anteater.ini
-    import_dealy_hours = pars['anteater']['import_delay']
-    bin_size = pars['anteater']['size_bins']
+    import_dealy_hours = pars['anteater'].getint('import_delay')
+    bin_size = pars['anteater'].getint('size_bins')
     hour = int(datetime.utcnow().strftime("%H"))
 
     # entrada store data in timestamp, so we need to convert these time bins to timestamps
