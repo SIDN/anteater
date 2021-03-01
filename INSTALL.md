@@ -99,3 +99,4 @@ and your `ENTRADA` server
 * The code above will show a time series of IPv4 queries for this server
 * Configure it on `crontab` to run it every hour
 * **TODO**: I am working on a script to automate this part, as there may be multiple sites
+* **TODO0**: `Anteater` has many more graphs and panes, will add them on the next few days
