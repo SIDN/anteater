@@ -17,9 +17,20 @@ grant all privileges on database anteater to $myuser;
 B. Creating tables used by Anteater
 
 ```sql
+-- store stats per authoritative server
+CREATE TABLE authserver (
+    epoch_time timestamp without time zone NOT NULL,
+    server_name character varying(20) NOT NULL,
+    ipv integer NOT NULL,
+    nqueries integer NOT NULL,
+    avg_rtt numeric(5,2)
+);
+
+
 CREATE TABLE anycastsites (
     epoch_time timestamp without time zone NOT NULL,
     server_name character varying(20) NOT NULL,
+    ipv integer NOT NULL,
     nqueries integer NOT NULL,
     nresolvers integer NOT NULL,
     nases integer NOT NULL,
@@ -29,22 +40,18 @@ CREATE TABLE anycastsites (
 CREATE TABLE hypergiants (
     epoch_time timestamp without time zone NOT NULL,
     asn character varying(30) NOT NULL,
+    ipv integer NOT NULL,
     nqueries integer NOT NULL,
     nresolvers integer NOT NULL,
     nsites integer NOT NULL,
     avg_rtt numeric(5,2)
 );
 
-CREATE TABLE authserver (
-    epoch_time timestamp without time zone NOT NULL,
-    server_name character varying(11) NOT NULL,
-    nqueries integer NOT NULL,
-    avg_rtt numeric(5,2)
-);
 
-CREATE TABLE public.resolvers (
+CREATE TABLE  resolvers (
     epoch_time timestamp without time zone NOT NULL,
     server_name character varying(11) NOT NULL,
+    ipv integer NOT NULL,
     resolvers integer NOT NULL,
     ases integer NOT NULL
 );
@@ -53,13 +60,15 @@ CREATE TABLE public.resolvers (
 CREATE TABLE rt_status (
     server_name character varying(20) NOT NULL,
     server_site character varying(20) NOT NULL,
+    ipv integer NOT NULL,
     ip_version integer NOT NULL,
     max_ts timestamp without time zone NOT NULL,
     last_complete_ts timestamp without time zone
 );
 
-CREATE TABLE public.rt_results (
+CREATE TABLE rt_results (
     server_name character varying(25) NOT NULL,
+    ipv integer NOT NULL,
     last_ts timestamp without time zone NOT NULL,
     rtt numeric(5,2) NOT NULL,
     nqueries integer NOT NULL
