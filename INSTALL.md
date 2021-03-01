@@ -81,3 +81,5 @@ CREATE TABLE rt_results (
 * Edit `src/anteater.ini` with the parameters related to our `PostgreSQL`database
 and your `ENTRADA` server
   
+## 3. Run the scripts
+  * (will be added as soon I validate it)
