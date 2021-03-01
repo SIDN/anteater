@@ -22,7 +22,7 @@ def conn_impala():
 
 def conn_postgresql():
     pars=read_ini()
-    host1=pars['postgresql']['host']
+    host1=pars['postgresql']['server']
     database1=pars['postgresql']['database']
     port1=pars['postgresql'].getint('port')
     user1=pars['postgresql']['username']
