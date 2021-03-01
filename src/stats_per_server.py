@@ -132,11 +132,13 @@ def run_query(entradaQuery, pars):
             server = str(k[0])
             ipv = str(k[1])
             nqueries = k[2]
-            rtt = k[3]
+            resolvers=str(k[3])
+            ases=str(k[4])
+            rtt = k[5]
             rtt = str(rtt).strip()
             rtt = float(rtt)
             key = server + "-ipv" + ipv
-            value = server + "," + str(ipv) + "," + str(nqueries) + "," + str(rtt)
+            value = server + "," + str(ipv) + "," + str(nqueries) + "," +  str(resolvers) +"," + str(ases) + "," + str(rtt)
             results[key] = value
 
     cursor.close()
