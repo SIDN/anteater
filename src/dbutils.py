@@ -10,8 +10,8 @@ def conn_impala():
     pars=read_ini()
     server1=pars['impala']['server']
     port1=pars['impala'].getint('port')
-    use_ssl1=['impala']['use_ssl']
-    auth_mechanism1=['impala']['auth_mechanism']
+    use_ssl1=pars['impala']['use_ssl']
+    auth_mechanism1=pars['impala']['auth_mechanism']
 
     try:
         return impala.dbapi.connect(host=server1, port=port1, use_ssl=use_ssl1,auth_mechanism=auth_mechanism1)
@@ -24,9 +24,9 @@ def conn_postgresql():
     pars=read_ini()
     host1=pars['postgresql']['host']
     database1=pars['postgresql']['database']
-    port1=['postgresql'].getint('port')
-    user1=['postgresql']['username']
-    password1=['postgresql']['password']
+    port1=pars['postgresql'].getint('port')
+    user1=pars['postgresql']['username']
+    password1=pars['postgresql']['password']
 
 
     try:
