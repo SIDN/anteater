@@ -39,5 +39,5 @@ def conn_postgresql():
 
 def read_ini():
     cfg = configparser.ConfigParser()
-    cfg.read('anteater-debug.ini')
+    cfg.read('anteater.ini')
     return cfg
