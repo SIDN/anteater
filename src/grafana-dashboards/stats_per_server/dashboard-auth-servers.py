@@ -3,6 +3,8 @@ import impala.dbapi
 import sys
 import configparser
 import string
+from datetime import date, timedelta
+
 
 def conn_impala():
     pars=read_ini()
@@ -27,13 +29,31 @@ def read_ini():
 
 def get_server_names(pars):
 
-    conn=conn_impala()
+
+    today = date.today()
+    print("Getting server names from 1 day ago")
+    today= today -  timedelta(days = 1)
+    year = today.strftime("%Y")
+    month = today.strftime("%m")
+    day = today.strftime("%d")
+
+    year = int(year)
+    month = int(month)
+    day = int(day)
+
+
+
 
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
 
-    entradaQuery = ''' select distinct(server_name,ipv)  from '''
-    entradaQuery = entradaQuery + entrada_db_table + ";"
+    entradaQuery = ''' select server,ipv  from '''
+    entradaQuery = entradaQuery + entrada_db_table + " where year="
+    entradaQuery = entradaQuery + str(year) + " AND  month=" + str(month) + " and  day=" + str(day) +\
+                   "  group by server,ipv;"
     cursor = "-1"
+    print(entradaQuery)
+    conn = conn_impala()
+
     try:
 
         cursor = conn.cursor(convert_types=False)
@@ -47,6 +67,7 @@ def get_server_names(pars):
     try:
         if pars['entrada']['request_pool'] != "":
             pool = pars['entrada']['request_pool']
+            print('entradaQuery')
             cursor.execute(entradaQuery, configuration={"REQUEST_POOL": pool})
         else:
             cursor.execute(entradaQuery)
