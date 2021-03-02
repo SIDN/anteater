@@ -78,14 +78,14 @@ def store_server_stats(arrayResults):
                 server = sp[1]
                 ipv = sp[2]
                 queries = int(sp[3])
-                resolvers=int(sp[4])
-                ases=int(sp[5])
+                resolvers = int(sp[4])
+                ases = int(sp[5])
                 rtt = float(sp[6])
 
                 query = " INSERT INTO authserver (epoch_time, server_name, ipv, nqueries, resolvers,ases, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 print(query)
-                #print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
+                # print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
                 cur.execute(query, (ts, server, ipv, queries, resolvers, ases, rtt))
 
                 conn.commit()
@@ -132,13 +132,14 @@ def run_query(entradaQuery, pars):
             server = str(k[0])
             ipv = str(k[1])
             nqueries = k[2]
-            resolvers=str(k[3])
-            ases=str(k[4])
+            resolvers = str(k[3])
+            ases = str(k[4])
             rtt = k[5]
             rtt = str(rtt).strip()
             rtt = float(rtt)
             key = server + "-ipv" + ipv
-            value = server + "," + str(ipv) + "," + str(nqueries) + "," +  str(resolvers) +"," + str(ases) + "," + str(rtt)
+            value = server + "," + str(ipv) + "," + str(nqueries) + "," + str(resolvers) + "," + str(ases) + "," + str(
+                rtt)
             results[key] = value
 
     cursor.close()
