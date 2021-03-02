@@ -31,8 +31,8 @@ def get_server_names(pars):
 
 
     today = date.today()
-    print("Getting server names from 1 day ago")
-    today= today -  timedelta(days = 1)
+    print("Getting server names from 2 days ago")
+    today= today -  timedelta(days = 2)
     year = today.strftime("%Y")
     month = today.strftime("%m")
     day = today.strftime("%d")
@@ -51,7 +51,7 @@ def get_server_names(pars):
     entradaQuery = entradaQuery + str(year) + " AND  month=" + str(month) + " and  day=" + str(day) +\
                    "  group by server,ipv;"
     cursor = "-1"
-    print(entradaQuery)
+
     conn = conn_impala()
 
     try:
