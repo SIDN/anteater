@@ -111,7 +111,7 @@ def makeQuery(pars,firstPanel,server_names):
     #now we need to create a new demoTS for each element in k
     # and update the variables accordingly
     for k in server_names:
-        sp=k.split("-")
+        sp=k.split(",")
         demoTS = targets[0]
         tempTS = demoTS.copy()
         demoQuery = demoTS['rawSql']
@@ -174,7 +174,7 @@ def main():
 
     with open('yourDashboards/authservers.json', 'w') as f:
         json.dump(baseJSON,f)
-    print("Dashboard generated. Import tourDashboards/authservers.json into Grafana and enjoy!")
+    print("Dashboard generated. Import yourDashboards/authservers.json into Grafana and enjoy it !")
 
 
 if __name__ == "__main__":
