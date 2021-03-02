@@ -74,9 +74,11 @@ CREATE TABLE rt_results (
 and your `ENTRADA` server
   
 ## 3. Run the scripts
-* `python stats_per_server.py`
-  * this script will pull stats per each authoritative server and IP version
-  * and will populate one of the tables
+* configure `cron` to run the scripts below *EVERY hour*:
+    * `python stats_per_server.py`
+    * this script will pull stats per each authoritative server and IP version
+  
+    
   
 ## 4. Configure `Grafana`
 A. Anteater uses [Grafana](https://grafana.com/) as visualization tool, so you'll need to set it up  
