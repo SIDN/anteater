@@ -10,8 +10,8 @@ We have been using `Anteater` at SIDN for more than 1 year now.
 
 
 ## Status
-* 2021-03-02: **The first dashboard** is operational!  Please have a go!
-  * We will keep on adding more dashboards in the comming days, namely:
+* 2021-03-02: **The first dashboard** is operational!  
+  * We will keep on adding more dashboards in the coming days, namely:
     1. One dashboard per authoritative server
     1. One dashboard for HyperGiants and your favorite ASes
 * Follow [INSTALL.md](INSTALL.md) for how to configure it
