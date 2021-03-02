@@ -79,24 +79,15 @@ and your `ENTRADA` server
   * and will populate one of the tables
   
 ## 4. Configure `Grafana`
-  * Anteater users [Grafana](https://grafana.com/) as visualization tool, so you'll need to set it up 
-    * You can read more about it a [Configuring Grafana](https://grafana.com/docs/grafana/latest/administration/configuration/)
-* After configuring your new data source in Grafana, you can create a new dashbaord and panel
-* To create a panel with number of queries per hour:
-  1. Click on `Add Panel`
-  1. Click on `Edit SQL ` to edit the query
-  1. Add something like :
-  ```sql
-  SELECT   epoch_time AS "time",
-  nqueries AS "YOUR_SERVER_NAME-IPv4"
-  FROM authserver
-  WHERE
-  $__timeFilter(epoch_time) AND
-  server_name = 'YOUR_SERVER_NAME'
-  and ipv=4
-  ORDER BY 1
-  ```
-* The code above will show a time series of IPv4 queries for this server
-* Configure it on `crontab` to run it every hour
-* **TODO**: I am working on a script to automate this part, as there may be multiple sites
-* **TODO0**: `Anteater` has many more graphs and panes, will add them on the next few days
+A. Anteater uses [Grafana](https://grafana.com/) as visualization tool, so you'll need to set it up  
+    * (we do not cover
+  it here, but follow [Configuring Grafana](https://grafana.com/docs/grafana/latest/administration/configuration/)
+ to learn how to do it)
+
+B. Next step is to confiugure the dashboards, which you can do manually or you can use our tool to export 
+a dashboard in `JSON` format, that you can later [import into Grafana](https://grafana.com/docs/grafana/latest/dashboards/export-import/).
+  1. go to `src/grafana-dasboards/stats-per-server/`
+  2. Run `python dashboard-auth-servers.py`
+  3. Retrieve `yourDashboards/authservers.json` and  [import it into Grafana](https://grafana.com/docs/grafana/latest/dashboards/export-import/). 
+
+* **Note**: will there are still more dashboards to be added, will add documentation here as we add them
