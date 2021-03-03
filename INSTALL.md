@@ -84,8 +84,7 @@ and your `ENTRADA` server
   
 ## 4. Configure `Grafana`
 4.1. Anteater uses [Grafana](https://grafana.com/) as visualization tool, so you'll need to set it up  
-    * (we do not cover
-  it here, but follow [Configuring Grafana](https://grafana.com/docs/grafana/latest/administration/configuration/)
+  * (we do not cover  it here, but follow [Configuring Grafana](https://grafana.com/docs/grafana/latest/administration/configuration/)
  to learn how to do it)
 
 4.2. Next step is to confiugure the dashboards, which you can do manually or you can use our tool to export 
