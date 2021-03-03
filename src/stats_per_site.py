@@ -43,12 +43,8 @@ def site_stats(pars):
 
     results = run_query_sites(query, pars)
 
-    resArray = []
-    key = str(ts1)
-    for k, v in results.items():
-        resArray.append(key + "," + v)
 
-    return resArray
+    return results
 
 
 def store_site_stats(arrayResults):
@@ -131,7 +127,7 @@ def run_query_sites(entradaQuery, pars):
         cursor.close()
 
     # parse results
-    results = dict()
+    results = []
     if cursor != 1:
 
         print('start to retrieve row  of cursor')
@@ -149,11 +145,10 @@ def run_query_sites(entradaQuery, pars):
             rtt = k[6]
             rtt = str(rtt).strip()
             rtt = float(rtt)
-            key = server
             value = server + "," + str(ipv) + "," + site + "," + str(nqueries) + "," + str(resolvers) + "," + str(
                 ases) + "," + str(
                 rtt)
-            results[key] = value
+            results.append(value)
 
     cursor.close()
     conn.close()
