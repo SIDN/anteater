@@ -43,6 +43,7 @@ CREATE TABLE anycastsites (
 CREATE TABLE ASes (
     epoch_time timestamp without time zone NOT NULL,
     asn character varying(30) NOT NULL,
+    server_name character varying(20) NOT NULL,
     ipv integer NOT NULL,
     queries integer NOT NULL,
     resolvers integer NOT NULL,
