@@ -75,14 +75,16 @@ def store_site_stats(arrayResults):
 
             for k in arrayResults:
                 '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
-                   count(distinct(asn)) as asn,  avg(tcp_hs_rtt)from entrada.dns 
+                   count(distinct(asn)) as asn,  avg(tcp_hs_rtt) from entrada.dns 
                 where year='''
                 sp = k.split(",")
+                #['1614744000', 'ns1.dns.nl', '6', 'los-angeles', '1360142', '10355', '573', '573.0']
+
                 print(sp)
                 ts = datetime.utcfromtimestamp(int(sp[0]))
                 server = sp[1]
+                ipv = int(sp[2])
                 site = sp[3]
-                ipv = sp[2]
                 queries = int(sp[4])
                 resolvers = int(sp[5])
                 ases = int(sp[6])
@@ -144,7 +146,7 @@ def run_query_sites(entradaQuery, pars):
             nqueries = k[3]
             resolvers = str(k[4])
             ases = str(k[5])
-            rtt = k[5]
+            rtt = k[6]
             rtt = str(rtt).strip()
             rtt = float(rtt)
             key = server
