@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 12,
+  "id": 16,
   "links": [],
   "panels": [
     {
@@ -41,14 +41,13 @@
       "hiddenSeries": false,
       "id": 2,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -70,7 +69,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  nqueries AS \"$LABEL\"\nFROM authserver\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  nqueries AS \"$LABEL\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV \n  and server_location='$SITE'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -96,7 +95,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Queries Totals",
+      "title": "ns1.dns.nl - Queries - IPv4",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -139,7 +138,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "debug",
-      "description": "RTT measured from TCP hadshakes\nAVG per server and IP version",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -155,17 +153,15 @@
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 3,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -187,7 +183,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$LABEL\"\nFROM authserver\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\nORDER BY 1\n",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -213,7 +209,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "RTT (TCP only)",
+      "title": "ns1.dns.nl - RTT (TCP)  - IPv4",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -265,22 +261,21 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
         "y": 9
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 4,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -302,7 +297,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$LABEL\"\nFROM authserver\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -328,7 +323,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Unique Resolvers",
+      "title": "ns1.dns.nl - Resolvers - IPv4",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -380,22 +375,21 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 12,
         "y": 9
       },
       "hiddenSeries": false,
-      "id": 7,
+      "id": 5,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -417,7 +411,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  ases AS \"$LABEL\"\nFROM authserver\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  ases AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -443,7 +437,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Unique ASes",
+      "title": "ns1.dns.nl - ASes - IPv4",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -488,12 +482,12 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Overview Authoritative Servers",
-  "uid": "r2vsluyMk",
+  "title": "debug-server",
+  "uid": "j6I1sqyMk",
   "version": 6
 }
