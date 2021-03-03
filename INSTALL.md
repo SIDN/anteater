@@ -32,6 +32,7 @@ CREATE TABLE authserver (
 CREATE TABLE anycastsites (
     epoch_time timestamp without time zone NOT NULL,
     server_name character varying(20) NOT NULL,
+    server_site character varying(20) NOT NULL,
     ipv integer NOT NULL,
     nqueries integer NOT NULL,
     nresolvers integer NOT NULL,
