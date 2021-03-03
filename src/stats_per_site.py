@@ -24,13 +24,13 @@ def site_stats(pars):
 
     # so this variables define the chunk of data to be analyzed
     # from anteater.ini
-    import_dealy_hours = pars['anteater'].getint('import_delay')
+    import_delay_hours = pars['anteater'].getint('import_delay')
     bin_size = pars['anteater'].getint('size_bins')
     hour = int(datetime.utcnow().strftime("%H"))
 
     # entrada store data in timestamp, so we need to convert these time bins to timestamps
-    ts1 = timestamp + ((hour - import_dealy_hours) * 3600)
-    ts2 = timestamp + ((hour - import_dealy_hours + bin_size) * 3600)
+    ts1 = timestamp + ((hour - import_delay_hours) * 3600)
+    ts2 = timestamp + ((hour - import_delay_hours + bin_size) * 3600)
 
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
 
@@ -91,7 +91,7 @@ def store_site_stats(arrayResults):
 
                 query = " INSERT INTO anycastsites (epoch_time, server_name, server_site,ipv, nqueries, resolvers,ases, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s,%s)"
-                print(query)
+                #print(query)
                 # print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
                 cur.execute(query, (ts, server, site, ipv, queries, resolvers, ases, rtt))
 
