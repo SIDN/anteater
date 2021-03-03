@@ -8,13 +8,16 @@ def makeASList(pars):
     ases4query=" ("
 
     asGroup=pars['anteater']['ases_to_monitor']
-    for i in asGroup:
+    sp=asGroup.split(",")
+    for i in sp:
         asn=i.split("-")[0].strip()
         ases4query=ases4query +"'" + asn +"',"
 
     ases4query=ases4query[:-1]
     ases4query=ases4query+") "
+    print(ases4query)
     return ases4query
+
 
 def as_stats(pars):
     today = date.today()
