@@ -4,18 +4,19 @@ from datetime import date, datetime
 
 from dbutils import conn_impala, conn_postgresql, read_ini
 
+
 def makeASList(pars):
-    ases4query=" ("
+    ases4query = " ("
 
-    asGroup=pars['anteater']['ases_to_monitor']
-    sp=asGroup.split(",")
+    asGroup = pars['anteater']['ases_to_monitor']
+    sp = asGroup.split(",")
     for i in sp:
-        asn=i.split("-")[0].strip()
-        ases4query=ases4query +"'" + asn +"',"
+        asn = i.split("-")[0].strip()
+        ases4query = ases4query + "'" + asn + "',"
 
-    ases4query=ases4query[:-1]
-    ases4query=ases4query+") "
-    print(ases4query)
+    ases4query = ases4query[:-1]
+    ases4query = ases4query + ") "
+    # print(ases4query)
     return ases4query
 
 
@@ -54,11 +55,9 @@ def as_stats(pars):
     query = query + str(year) + " AND  month=" + str(month) + " and  day=" + str(day)
     query = query + " and time between " + str(ts1 * 1000) + " and " + str(ts2 * 1000) + " and asn in "
 
-    ases=makeASList(pars)
+    ases = makeASList(pars)
 
-    query= query + ases +  " group by asn, server, ipv;"
-
-
+    query = query + ases + " group by asn, server, ipv;"
 
     results = run_query(query, pars)
 
@@ -96,23 +95,23 @@ def store_as_stats(arrayResults):
                     where year='''
             for k in arrayResults:
                 sp = k.split(",")
-                print(sp)
+                # print(sp)
                 ts = datetime.utcfromtimestamp(int(sp[0]))
-                asn=sp[1]
+                asn = sp[1]
                 server = sp[2]
                 ipv = sp[3]
                 queries = int(sp[4])
                 resolvers = int(sp[5])
                 sites = int(sp[6])
-                rtt=""
+                rtt = ""
                 try:
                     rtt = float(sp[7])
                 except:
-                    rtt=None
+                    rtt = None
 
                 query = " INSERT INTO ASes (epoch_time, asn, server_name, ipv, queries, resolvers,sites, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                #print(cur.mogrify(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
+                # print(cur.mogrify(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
                 cur.execute(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
 
                 conn.commit()
@@ -150,7 +149,7 @@ def run_query(entradaQuery, pars):
         cursor.close()
 
     # parse results
-    results =[]
+    results = []
     if cursor != 1:
 
         print('start to retrieve row  of cursor')
@@ -159,28 +158,25 @@ def run_query(entradaQuery, pars):
             count(distinct(server_location)) as nsites, avg(tcp_hs_rtt) as avgRTT 
         '''
         for k in cursor:
-            asn=str(k[0])
+            asn = str(k[0])
             server = str(k[1])
             ipv = str(k[2])
             queries = str(k[3])
             resolvers = str(k[4])
-            sites=str(k[5])
+            sites = str(k[5])
             rtt = k[6]
             rtt = str(rtt).strip()
-            #handling cases of no TCP queries and thus no RTT
-            if rtt!="None":
+            # handling cases of no TCP queries and thus no RTT
+            if rtt != "None":
                 rtt = str(float(rtt))
             else:
-                rtt="Null"
-            value = asn + "," + server+ "," + ipv+ "," + queries + "," + resolvers + "," + sites + "," + rtt
+                rtt = "Null"
+            value = asn + "," + server + "," + ipv + "," + queries + "," + resolvers + "," + sites + "," + rtt
             results.append(value)
 
     cursor.close()
     conn.close()
     return results
-
-
-
 
 
 def main(pars):
