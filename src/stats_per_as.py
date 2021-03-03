@@ -109,8 +109,7 @@ def store_as_stats(arrayResults):
 
                 query = " INSERT INTO ASes (epoch_time, asn, server_name, ipv, queries, resolvers,sites, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                print(query)
-                # print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
+                #print(cur.mogrify(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
                 cur.execute(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
 
                 conn.commit()
