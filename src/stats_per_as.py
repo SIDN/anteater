@@ -147,7 +147,6 @@ def run_query(entradaQuery, pars):
         e = sys.exc_info()
         print(str(e))
         cursor.close()
-
     # parse results
     results = []
     if cursor != 1:
