@@ -45,9 +45,8 @@ def site_stats(pars):
 
     resArray = []
     key = str(ts1)
-    for k, v in results.items():
-        resArray.append(key + "," + v)
-
+    for k in results:
+        resArray.append(key + "," + k)
     return resArray
 
 
