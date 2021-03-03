@@ -74,12 +74,15 @@ def store_site_stats(arrayResults):
         try:
 
             for k in arrayResults:
+                '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
+                   count(distinct(asn)) as asn,  avg(tcp_hs_rtt)from entrada.dns 
+                where year='''
                 sp = k.split(",")
                 print(sp)
                 ts = datetime.utcfromtimestamp(int(sp[0]))
                 server = sp[1]
-                site = sp[2]
-                ipv = sp[3]
+                site = sp[3]
+                ipv = sp[2]
                 queries = int(sp[4])
                 resolvers = int(sp[5])
                 ases = int(sp[6])
@@ -156,9 +159,9 @@ def run_query_sites(entradaQuery, pars):
 
 
 def main(pars):
-    print("starting to pull stats per server data from ENTRADA")
+    print("starting to pull stats per site data from ENTRADA")
     results = site_stats(pars)
-    print("starting to store start per server data on  Postgresql")
+    print("starting to store start per site data on  Postgresql")
     store = store_site_stats(results)
 
 
