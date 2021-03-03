@@ -40,7 +40,7 @@ CREATE TABLE anycastsites (
     avg_rtt numeric(5,2)
 );
 
-CREATE TABLE hypergiants (
+CREATE TABLE ASes (
     epoch_time timestamp without time zone NOT NULL,
     asn character varying(30) NOT NULL,
     ipv integer NOT NULL,
