@@ -109,7 +109,6 @@ def run_query_sites(entradaQuery, pars):
     conn = conn_impala()
     cursor = "-1"
     try:
-
         cursor = conn.cursor(convert_types=False)
     except:
         print("error cursor")
