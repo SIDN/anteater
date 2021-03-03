@@ -20,8 +20,7 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
 
 
 ## Next steps:
-*  2021-03-02: Refactor code to retrieve  RTT statistics per Anycast  locations (site) 
-
+*  2021-03-03: Instrument `Anteater` to generate automatically Grafana dashboards for sites and ASes
 
 
 ![Anteater](resources/anteater-logo.png)
