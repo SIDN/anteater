@@ -43,8 +43,12 @@ def site_stats(pars):
 
     results = run_query_sites(query, pars)
 
+    resArray = []
+    key = str(ts1)
+    for k, v in results.items():
+        resArray.append(key + "," + v)
 
-    return results
+    return resArray
 
 
 def store_site_stats(arrayResults):
