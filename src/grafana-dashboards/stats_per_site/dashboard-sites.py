@@ -141,6 +141,7 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
 
 def makeServerPanels(server,sites,pars):
 
+    baseJSON=''
     with open('template/template.json') as f:
         baseJSON = json.load(f)
 
@@ -170,12 +171,14 @@ def makeServerPanels(server,sites,pars):
         panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
         panelList.append(makeQuery(pars, asesPanel, server, sites, 6))
 
-        baseJSON['panels'] = panelList
+        localPanel=baseJSON.copy()
+        localPanel['panels'] = panelList
 
 
         with open('export/' + server+ '.json', 'w') as aus:
-            json.dump(baseJSON,aus)
-        aus.close()
+            #print(str(baseJSON))
+            json.dump(localPanel,aus)
+            aus.close()
         print("Dashboard generated. Import export/"  + server+ ".json into Grafana and enjoy it !")
 
 
@@ -207,9 +210,6 @@ def main():
     for eachServer in servers:
         jsonFile=makeServerPanels(eachServer,serverSite[eachServer],pars)
 
-        with open('export/' + eachServer+ ".json", 'w') as f:
-            json.dump(jsonFile,f)
-        f.close()
 
 
     print("Dashboards generated. Import export/*.json nto Grafana and enjoy it !")
