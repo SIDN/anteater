@@ -127,7 +127,7 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
         newQuery = newQuery.replace("$SITE", str(singleSite))
         tempTS['rawSql']=newQuery
         #each line has its own id, alphabet sequence, so we need to get it
-        if counter<27:
+        if counter<26:
             tempTS['refId']=alphabet[counter]
         else:
             tempTS['refId']="A"+ str(secondCounter)
