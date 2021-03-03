@@ -101,7 +101,11 @@ def store_as_stats(arrayResults):
                 queries = int(sp[4])
                 resolvers = int(sp[5])
                 sites = int(sp[6])
-                rtt = float(sp[7])
+                rtt=""
+                try:
+                    rtt = float(sp[7])
+                except:
+                    rtt=None
 
                 query = " INSERT INTO ASes (epoch_time, asn, server_name, ipv, queries, resolvers,sites, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -161,7 +165,11 @@ def run_query(entradaQuery, pars):
             sites=str(k[5])
             rtt = k[6]
             rtt = str(rtt).strip()
-            rtt = str(float(rtt))
+            #handling cases of no TCP queries and thus no RTT
+            if rtt!="None":
+                rtt = str(float(rtt))
+            else:
+                rtt="Null"
             value = asn + "," + server+ "," + ipv+ "," + queries + "," + resolvers + "," + sites + "," + rtt
             results.append(value)
 
