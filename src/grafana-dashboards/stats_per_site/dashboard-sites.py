@@ -141,40 +141,42 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
 
 def makeServerPanels(server,sites,pars):
 
-    baseJSON = ''
     with open('template/template.json') as f:
         baseJSON = json.load(f)
 
-    # extract all panels before adding stuff
-    queriesPanel = baseJSON['panels'][0]
-    rttPanel = baseJSON['panels'][1]
-    resolversPanel = baseJSON['panels'][2]
-    asesPanel = baseJSON['panels'][2]
 
-    # now, we will need to generate a v4 and v6 version for each of them
+        # extract all panels before adding stuff
+        queriesPanel = baseJSON['panels'][0]
+        rttPanel = baseJSON['panels'][1]
+        resolversPanel = baseJSON['panels'][2]
+        asesPanel = baseJSON['panels'][2]
 
-    panelList=[]
-    #queries
-    panelList.append(makeQuery(pars, queriesPanel,server, sites,4))
-    panelList.append(makeQuery(pars, queriesPanel, server, sites, 6))
+        # now, we will need to generate a v4 and v6 version for each of them
 
-    #rtt
-    panelList.append(makeQuery(pars, rttPanel,server, sites,4))
-    panelList.append(makeQuery(pars, rttPanel, server, sites, 6))
+        panelList=[]
+        #queries
+        panelList.append(makeQuery(pars, queriesPanel,server, sites,4))
+        panelList.append(makeQuery(pars, queriesPanel, server, sites, 6))
 
-    # resolvers
-    panelList.append(makeQuery(pars, resolversPanel, server, sites, 4))
-    panelList.append(makeQuery(pars, resolversPanel, server, sites, 6))
+        #rtt
+        panelList.append(makeQuery(pars, rttPanel,server, sites,4))
+        panelList.append(makeQuery(pars, rttPanel, server, sites, 6))
 
-    #ases
-    panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
-    panelList.append(makeQuery(pars, asesPanel, server, sites, 6))
+        # resolvers
+        panelList.append(makeQuery(pars, resolversPanel, server, sites, 4))
+        panelList.append(makeQuery(pars, resolversPanel, server, sites, 6))
 
-    baseJSON['panels'] =panelList
+        #ases
+        panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
+        panelList.append(makeQuery(pars, asesPanel, server, sites, 6))
 
-    with open('export/' + server+ '.json', 'w') as f:
-        json.dump(baseJSON,f)
-    print("Dashboard generated. Import export/"  + server+ ".json into Grafana and enjoy it !")
+        baseJSON['panels'] = panelList
+
+
+        with open('export/' + server+ '.json', 'w') as aus:
+            json.dump(baseJSON,aus)
+        aus.close()
+        print("Dashboard generated. Import export/"  + server+ ".json into Grafana and enjoy it !")
 
 
 def main():
