@@ -4,8 +4,19 @@ from datetime import date, datetime
 
 from dbutils import conn_impala, conn_postgresql, read_ini
 
+def makeASList(pars):
+    ases4query=" ("
 
-def site_stats(pars):
+    asGroup=pars['anteater']['ases_to_monitor']
+    for i in asGroup:
+        asn=i.split("-")[0].strip()
+        ases4query=ases4query +"'" + asn +"',"
+
+    ases4query=ases4query[:-1]
+    ases4query=ases4query+") "
+    return ases4query
+
+def as_stats(pars):
     today = date.today()
     year = today.strftime("%Y")
     month = today.strftime("%m")
@@ -34,25 +45,31 @@ def site_stats(pars):
 
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
 
-    query = '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
-            count(distinct(asn)) as asn,  avg(tcp_hs_rtt)from entrada.dns 
-           where year='''
+    query = ''' select  asn,server, ipv,  count(1) as nqueries, count(distinct(src)) as resolvers, 
+            count(distinct(server_location)) as nsites, avg(tcp_hs_rtt) as avgRTT  from entrada.dns 
+            where year='''
     query = query + str(year) + " AND  month=" + str(month) + " and  day=" + str(day)
-    query = query + " and time between " + str(ts1 * 1000) + " and " + str(ts2 * 1000)
-    query = query + "   group by server, ipv, server_location;"
+    query = query + " and time between " + str(ts1 * 1000) + " and " + str(ts2 * 1000) + " and asn in "
 
-    results = run_query_sites(query, pars)
+    ases=makeASList(pars)
+
+    query= query + ases +  " group by asn, server, ipv;"
+
+
+
+    results = run_query(query, pars)
 
     resArray = []
     key = str(ts1)
     for k in results:
         resArray.append(key + "," + k)
+
     return resArray
 
 
-def store_site_stats(arrayResults):
-    # print('store on file, just for debbugging')
-    outz = open('results-sites.csv', 'w')
+def store_as_stats(arrayResults):
+    print('store on file, just for debbugging')
+    outz = open('results-ases.csv', 'w')
     for k in arrayResults:
         outz.write(k + "\n")
     outz.close()
@@ -71,23 +88,26 @@ def store_site_stats(arrayResults):
         cur = conn.cursor()
 
         try:
-
+            query = ''' select  asn,server, ipv,  count(1) as nqueries, count(distinct(src)) as resolvers, 
+                    count(distinct(server_location)) as nsites, avg(tcp_hs_rtt) as avgRTT  from entrada.dns 
+                    where year='''
             for k in arrayResults:
-                '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
-                   count(distinct(asn)) as asn,  avg(tcp_hs_rtt) from entrada.dns 
-                where year='''
                 sp = k.split(",")
+                print(sp)
                 ts = datetime.utcfromtimestamp(int(sp[0]))
-                server = sp[1]
-                ipv = int(sp[2])
-                site = sp[3]
+                asn=sp[1]
+                server = sp[2]
+                ipv = sp[3]
                 queries = int(sp[4])
                 resolvers = int(sp[5])
-                ases = int(sp[6])
+                sites = int(sp[6])
                 rtt = float(sp[7])
-                query = " INSERT INTO anycastsites (epoch_time, server_name, server_site,ipv, nqueries, resolvers,ases, avg_rtt) " \
-                        "VALUES (%s, %s, %s, %s, %s, %s, %s,%s)"
-                cur.execute(query, (ts, server, site, ipv, queries, resolvers, ases, rtt))
+
+                query = " INSERT INTO ASes (epoch_time, asn, server_name, ipv, queries, resolvers,sites, avg_rtt) " \
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+                print(query)
+                # print(cur.mogrify(query, (ts, server, ipv, queries, rtt)))
+                cur.execute(query, (ts, asn, server, ipv, queries, resolvers, sites, rtt))
 
                 conn.commit()
             cur.close()
@@ -99,10 +119,11 @@ def store_site_stats(arrayResults):
             print(str(e))
 
 
-def run_query_sites(entradaQuery, pars):
+def run_query(entradaQuery, pars):
     conn = conn_impala()
     cursor = "-1"
     try:
+
         cursor = conn.cursor(convert_types=False)
     except:
         print("error cursor")
@@ -123,27 +144,25 @@ def run_query_sites(entradaQuery, pars):
         cursor.close()
 
     # parse results
-    results = []
+    results =[]
     if cursor != 1:
 
         print('start to retrieve row  of cursor')
-        '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
-           count(distinct(asn)) as asn,  avg(tcp_hs_rtt)from entrada.dns 
-        where year='''
-
+        ''' 
+            select  asn,server, ipv,  count(1) as nqueries, count(distinct(src)) as resolvers, 
+            count(distinct(server_location)) as nsites, avg(tcp_hs_rtt) as avgRTT 
+        '''
         for k in cursor:
-            server = str(k[0])
-            ipv = str(k[1])
-            site = str(k[2])
-            nqueries = k[3]
+            asn=str(k[0])
+            server = str(k[1])
+            ipv = str(k[2])
+            queries = str(k[3])
             resolvers = str(k[4])
-            ases = str(k[5])
+            sites=str(k[5])
             rtt = k[6]
             rtt = str(rtt).strip()
-            rtt = float(rtt)
-            value = server + "," + str(ipv) + "," + site + "," + str(nqueries) + "," + str(resolvers) + "," + str(
-                ases) + "," + str(
-                rtt)
+            rtt = str(float(rtt))
+            value = asn + "," + server+ "," + ipv+ "," + queries + "," + resolvers + "," + sites + "," + rtt
             results.append(value)
 
     cursor.close()
@@ -151,11 +170,14 @@ def run_query_sites(entradaQuery, pars):
     return results
 
 
+
+
+
 def main(pars):
-    print("starting to pull stats per site data from ENTRADA")
-    results = site_stats(pars)
-    print("starting to store start per site data on  Postgresql")
-    store = store_site_stats(results)
+    print("starting to pull stats per AS data from ENTRADA")
+    results = as_stats(pars)
+    print("starting to store start per AS data on  Postgresql")
+    store = store_as_stats(results)
 
 
 if __name__ == "__main__":
@@ -163,7 +185,8 @@ if __name__ == "__main__":
     if len(sys.argv) != 1:
         print("Wrong number of parameters\n")
         print(str(len(sys.argv)))
-        print("Usage:  stats_per_server.py")
+        print("Usage:  stats_per_as.py")
+
 
     else:
 
