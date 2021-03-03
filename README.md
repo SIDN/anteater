@@ -14,6 +14,8 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
   * We will keep on adding more dashboards in the coming days, namely:
     1. One dashboard per authoritative server
     1. One dashboard for HyperGiants and your favorite ASes
+
+## To install it
 * Follow [INSTALL.md](INSTALL.md) for how to configure it
 
 
