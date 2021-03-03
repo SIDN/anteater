@@ -35,8 +35,8 @@ CREATE TABLE anycastsites (
     server_site character varying(20) NOT NULL,
     ipv integer NOT NULL,
     nqueries integer NOT NULL,
-    nresolvers integer NOT NULL,
-    nases integer NOT NULL,
+    resolvers integer NOT NULL,
+    ases integer NOT NULL,
     avg_rtt numeric(5,2)
 );
 
@@ -44,9 +44,9 @@ CREATE TABLE hypergiants (
     epoch_time timestamp without time zone NOT NULL,
     asn character varying(30) NOT NULL,
     ipv integer NOT NULL,
-    nqueries integer NOT NULL,
-    nresolvers integer NOT NULL,
-    nsites integer NOT NULL,
+    queries integer NOT NULL,
+    resolvers integer NOT NULL,
+    sites integer NOT NULL,
     avg_rtt numeric(5,2)
 );
 
