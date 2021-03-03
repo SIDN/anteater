@@ -147,22 +147,24 @@ def makeServerPanels(server,sites,pars):
 
     # now, we will need to generate a v4 and v6 version for each of them
 
-    makeQuery(pars, queriesPanel,server, sites,4)
-    baseJSON['panels'][0] =makeQuery(pars, queriesPanel,server, sites,4)
-    # then v6
-    baseJSON['panels'][1] = makeQuery(pars, queriesPanel,server, sites,6)
+    panelList=[]
+    #queries
+    panelList.append(makeQuery(pars, queriesPanel,server, sites,4))
+    panelList.append(makeQuery(pars, queriesPanel, server, sites, 6))
 
-    # second panel, rtt
-    baseJSON['panels'][2] = makeQuery(pars, rttPanel,server, sites,4)
-    baseJSON['panels'][3] = makeQuery(pars, rttPanel, server, sites, 6)
+    #rtt
+    panelList.append(makeQuery(pars, rttPanel,server, sites,4))
+    panelList.append(makeQuery(pars, rttPanel, server, sites, 6))
 
-    #resolvers
-    baseJSON['panels'][4] = makeQuery(pars, resolversPanel, server, sites, 4)
-    baseJSON['panels'][5] = makeQuery(pars, resolversPanel, server, sites, 6)
+    # resolvers
+    panelList.append(makeQuery(pars, resolversPanel, server, sites, 4))
+    panelList.append(makeQuery(pars, resolversPanel, server, sites, 6))
 
-    #    ases
-    baseJSON['panels'][6] = makeQuery(pars, asesPanel, server, sites, 4)
-    baseJSON['panels'][7] = makeQuery(pars, asesPanel, server, sites, 6)
+    #ases
+    panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
+    panelList.append(makeQuery(pars, asesPanel, server, sites, 6))
+
+    baseJSON['panels'] =panelList
 
     with open('export/' + server+ '.json', 'w') as f:
         json.dump(baseJSON,f)
