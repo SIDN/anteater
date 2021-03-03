@@ -107,6 +107,8 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
     pg_db = pars['postgresql']['database']
     demoQuery=demoTS['rawSql']
     counter=0
+    secondCounter=1
+
     #now we need to create a new demoTS for each element in k
     # and update the variables accordingly
     for singleSite in sites:
@@ -125,7 +127,11 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
         newQuery = newQuery.replace("$SITE", str(singleSite))
         tempTS['rawSql']=newQuery
         #each line has its own id, alphabet sequence, so we need to get it
-        tempTS['refId']=alphabet[counter]
+        if counter<27:
+            tempTS['refId']=alphabet[counter]
+        else:
+            tempTS['refId']="A"+ str(secondCounter)
+            secondCounter=secondCounter+1
         counter=counter+1
         newTargetList.append(tempTS)
 
@@ -175,12 +181,9 @@ def main():
 
     pars=read_ini()
 
-    #server_names = get_server_names(pars)
+    server_names = get_server_names(pars)
 
-    server_names=[]
-    server_names.append("ns1.dns.nl-london-ipv4")
-    server_names.append("ns1.dns.nl-ams-ipv6")
-    server_names.append("ns3.dns.nl-brz-ipv6")
+
     servers=set()
     serverSite=dict()
 
