@@ -1,5 +1,5 @@
 # Anteater
-_Real-time Authoritative Server Monitoring with passive measurements._ 
+_Real-time Authoritative Server Monitoring with passive DNS measurements._ 
 
 We presented `Anteater` recently at:
 
