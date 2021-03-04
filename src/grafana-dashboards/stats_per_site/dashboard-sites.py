@@ -87,7 +87,7 @@ def get_server_names(pars):
             server = str(k[0])
             server_location=str(k[1])
             ipv = str(k[2])
-            results.append(server+"-"+server_location+"-"+ipv)
+            results.append(server+"|"+server_location+"|"+ipv)
     cursor.close()
     conn.close()
     sorted(results)
@@ -109,34 +109,43 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
     counter=0
     secondCounter=1
 
+    demoTS = targets[0]
+    setSites=set(sites)
+    sites=list(setSites)
+    sites.sort()
+
     #now we need to create a new demoTS for each element in k
     # and update the variables accordingly
     for singleSite in sites:
+        if singleSite!='':
+            tempTS = demoTS.copy()
+            demoQuery = demoTS['rawSql']
+            label=singleSite+"-IPv"+str(ipv)
 
-        demoTS = targets[0]
-        tempTS = demoTS.copy()
-        demoQuery = demoTS['rawSql']
 
-        label=singleSite+"-IPv"+str(ipv)
-
-        copyDemoTS=demoTS
-        newQuery=demoQuery.replace("$LABEL", label)
-        #print(tempSQL)
-        newQuery=newQuery.replace("$SERVER_NAME", server_name)
-        newQuery=newQuery.replace("$IPV",str(ipv))
-        newQuery = newQuery.replace("$SITE", str(singleSite))
-        tempTS['rawSql']=newQuery
-        #each line has its own id, alphabet sequence, so we need to get it
-        if counter<26:
-            tempTS['refId']=alphabet[counter]
-        else:
-            tempTS['refId']="A"+ str(secondCounter)
-            secondCounter=secondCounter+1
-        counter=counter+1
-        newTargetList.append(tempTS)
+            newQuery=demoQuery.replace("$LABEL", label)
+            #print(tempSQL)
+            newQuery=newQuery.replace("$SERVER_NAME", server_name)
+            newQuery=newQuery.replace("$IPV",str(ipv))
+            newQuery = newQuery.replace("$SITE", str(singleSite))
+            tempTS['rawSql']=newQuery
+            #each line has its own id, alphabet sequence, so we need to get it
+            if counter<26:
+                tempTS['refId']=alphabet[counter]
+            else:
+                tempTS['refId']="A"+ str(secondCounter)
+                secondCounter=secondCounter+1
+            counter=counter+1
+            print(tempTS['rawSql'])
+            newTargetList.append(tempTS)
 
     firstPanel['targets'] = newTargetList
+    #print(str(newTargetList))
+    pg_db='debug'
     firstPanel['datasource']=pg_db
+    firstPanel['title']=firstPanel['title'].replace("$SERVER_NAME", server_name)
+    firstPanel['title'] = firstPanel['title'].replace("$IPV", "IPv"+str(ipv))
+
     return firstPanel
 
 def makeServerPanels(server,sites,pars):
@@ -144,36 +153,43 @@ def makeServerPanels(server,sites,pars):
     baseJSON=''
     with open('template/template.json') as f:
         baseJSON = json.load(f)
-
+        copyBaseJSON=baseJSON.copy()
+        localPanel=baseJSON.copy()
 
         # extract all panels before adding stuff
-        queriesPanel = baseJSON['panels'][0]
-        rttPanel = baseJSON['panels'][1]
-        resolversPanel = baseJSON['panels'][2]
-        asesPanel = baseJSON['panels'][2]
+        queriesPanel = copyBaseJSON['panels'][0]
+        queriesPanelV6 = copyBaseJSON['panels'][1]
+
+        rttPanel = copyBaseJSON['panels'][2]
+        rttPanelV6 = copyBaseJSON['panels'][3]
+
+        resolversPanel = copyBaseJSON['panels'][4]
+        resolversPanelV6 = copyBaseJSON['panels'][5]
+
+        asesPanel = copyBaseJSON['panels'][6]
+        asesPanelV6 = copyBaseJSON['panels'][7]
 
         # now, we will need to generate a v4 and v6 version for each of them
 
         panelList=[]
-        #queries
         panelList.append(makeQuery(pars, queriesPanel,server, sites,4))
-        panelList.append(makeQuery(pars, queriesPanel, server, sites, 6))
+        panelList.append(makeQuery(pars, queriesPanelV6, server, sites, 6))
 
         #rtt
         panelList.append(makeQuery(pars, rttPanel,server, sites,4))
-        panelList.append(makeQuery(pars, rttPanel, server, sites, 6))
+        panelList.append(makeQuery(pars, rttPanelV6, server, sites, 6))
 
         # resolvers
         panelList.append(makeQuery(pars, resolversPanel, server, sites, 4))
-        panelList.append(makeQuery(pars, resolversPanel, server, sites, 6))
+        panelList.append(makeQuery(pars, resolversPanelV6, server, sites, 6))
 
         #ases
         panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
-        panelList.append(makeQuery(pars, asesPanel, server, sites, 6))
+        panelList.append(makeQuery(pars, asesPanelV6, server, sites, 6))
 
-        localPanel=baseJSON.copy()
+
         localPanel['panels'] = panelList
-
+        localPanel['title']= server +" Sites Monitoring"
 
         with open('export/' + server+ '.json', 'w') as aus:
             #print(str(baseJSON))
@@ -193,36 +209,29 @@ def main():
     serverSite=dict()
 
     for k in server_names:
-        sp=k.split('-')
+        sp=k.split('|')
         localServer=sp[0].strip()
         servers.add(localServer)
-        site=sp[1].strip()
+        site=sp[1]
         if localServer not in serverSite:
             serverSite[localServer]=[]
 
         tempArray=serverSite[localServer]
         tempArray.append(site)
         serverSite[localServer]=tempArray
-
-
-    #we will need to generate a  dashboard PER server
-    dashboards=[]
+    
+    
     for eachServer in servers:
         jsonFile=makeServerPanels(eachServer,serverSite[eachServer],pars)
 
 
-
-    print("Dashboards generated. Import export/*.json nto Grafana and enjoy it !")
 if __name__ == "__main__":
 
     if len(sys.argv) != 1:
         print("Wrong number of parameters\n")
         print(str(len(sys.argv)))
         print("Usage:  python dashboard-auth-servers.py")
-
-
     else:
-
 
         z=main()
 

@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 16,
+  "id": 23,
   "links": [],
   "panels": [
     {
@@ -41,13 +41,14 @@
       "hiddenSeries": false,
       "id": 2,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -69,7 +70,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  nqueries AS \"$LABEL\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV \n  and server_location='$SITE'\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  nqueries AS \"$LABEL\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV \n  and server_site='$SITE'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -95,7 +96,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ns1.dns.nl - Queries - IPv4",
+      "title": "$SERVER_NAME - Queries - $IPV",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -137,7 +138,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "debug",
+      "datasource": "$PG_DB",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -153,15 +154,17 @@
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 3,
+      "id": 6,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -183,7 +186,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  nqueries AS \"$LABEL\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV \n  and server_site='$SITE'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -209,7 +212,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ns1.dns.nl - RTT (TCP)  - IPv4",
+      "title": "$SERVER_NAME - Queries - $IPV",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -251,7 +254,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "debug",
+      "datasource": "$PG_DB",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -267,15 +270,16 @@
         "y": 9
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 3,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -297,7 +301,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV   and server_site='$SITE'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -323,7 +327,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ns1.dns.nl - Resolvers - IPv4",
+      "title": "$SERVER_NAME - RTT (TCP)  - $IPV",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -365,7 +369,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "debug",
+      "datasource": "$PG_DB",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -381,15 +385,16 @@
         "y": 9
       },
       "hiddenSeries": false,
-      "id": 5,
+      "id": 8,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -411,7 +416,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  ases AS \"London\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = 'ns1.dns.nl'\n  and ipv=4\n  and server_site='london'\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV  and server_site='$SITE'\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -437,7 +442,467 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ns1.dns.nl - ASes - IPv4",
+      "title": "$SERVER_NAME - RTT (TCP)  -  $IPV",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$PG_DB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\n  and server_site='$SITE'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$SERVER_NAME - Resolvers - $IPV",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$PG_DB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\n  and server_site='$SITE'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$SERVER_NAME - Resolvers -   $IPV",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$PG_DB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  ases AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\n  and server_site='$SITE'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$SERVER_NAME - ASes - $IPV",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$PG_DB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  ases AS \"$SITE\"\nFROM anycastSites\nWHERE\n  $__timeFilter(epoch_time) AND\n  server_name = '$SERVER_NAME'\n  and ipv=$IPV\n  and server_site='$SITE'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$SERVER_NAME - ASes -  $IPV",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -487,7 +952,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "debug-server",
+  "title": "$SERVER Sites Monitoring",
   "uid": "j6I1sqyMk",
-  "version": 6
+  "version": 20
 }
