@@ -22,9 +22,6 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
 * Follow [INSTALL.md](INSTALL.md) for how to configure it
 
 
-## Next steps:
-*  2021-03-03: Instrument `Anteater` to generate automatically Grafana dashboards for sites and ASes
-
 
 ![Anteater](resources/anteater-logo.png)
 
