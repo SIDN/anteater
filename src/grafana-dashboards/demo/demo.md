@@ -16,5 +16,9 @@ to generate dashdoards as below.
  
 ## 3. Hypergiants and favorite ASes
 
-* TODO
+ * The `as.py` script populates the database, which can be used
+to generate dashdoards as below. It generates only one dashboard
+   
+![ASes dashboard](dash-ases.png)
 
+   

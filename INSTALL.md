@@ -107,4 +107,16 @@ anycast sites are shown.
     1. go to `src/grafana-dasboards/stats_per_site/`
     2. Run `python dashboard-sites.py`
     3. Retrieve `export/$SERVER.json` and  [import it into Grafana](https://grafana.com/docs/grafana/latest/dashboards/export-import/).
-        * there will be mujltiple dashboards, one per auth server.
+        * there will be multiple dashboards, one per auth server.
+
+## 4.2 ASes Dashboard
+
+* Now we need to generate **one dashboard** per Autonomous System we are interested in monitoring
+* You can **add your ASes of choice** on [anteater.ini](src/anteater.ini), using the variable
+  `ases_to_monitor`
+  
+* To generate it, do the following steps:
+    1. go to `src/grafana-dasboards/stats_per_as/`
+    2. Run `python dashboard-ases.py`
+    3. Retrieve `export/ases.json` and  [import it into Grafana](https://grafana.com/docs/grafana/latest/dashboards/export-import/).
+    

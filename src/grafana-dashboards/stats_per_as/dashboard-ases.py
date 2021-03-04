@@ -47,12 +47,15 @@ def get_server_names(pars):
     month = int(month)
     day = int(day)
 
+
+
+
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
 
-    entradaQuery = ''' select server,server_location,ipv  from '''
+    entradaQuery = ''' select server  from '''
     entradaQuery = entradaQuery + entrada_db_table + " where year="
     entradaQuery = entradaQuery + str(year) + " AND  month=" + str(month) + " and  day=" + str(day) +\
-                   "  group by server,server_location,ipv;"
+                   "  group by server;"
     cursor = "-1"
 
     conn = conn_impala()
@@ -70,7 +73,7 @@ def get_server_names(pars):
     try:
         if pars['entrada']['request_pool'] != "":
             pool = pars['entrada']['request_pool']
-            #print('entradaQuery')
+            print('entradaQuery')
             cursor.execute(entradaQuery, configuration={"REQUEST_POOL": pool})
         else:
             cursor.execute(entradaQuery)
@@ -88,15 +91,15 @@ def get_server_names(pars):
         # select server,ipv, count(1) as  nqueries,avg(tcp_hs_rtt) from
         for k in cursor:
             server = str(k[0])
-            server_location=str(k[1])
-            ipv = str(k[2])
-            results.append(server+"|"+server_location+"|"+ipv)
+            results.append(server)
     cursor.close()
     conn.close()
     sorted(results)
+    #print("DEBUG\n results are\n"+ str(results))
     return results
 
-def makeQuery(pars,firstPanel,server_name,sites,ipv):
+
+def makeQuery(pars,firstPanel,serverList,dictASes,ipv):
 
     #targets is a grafana list. each element in a list is a dict that represents a single line in a graph
     #like, graph for ns1.X.com IPv6 queries
@@ -107,51 +110,69 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
     demoTS=targets[0]
     alphabet=list(string.ascii_uppercase)
 
+
     pg_db = pars['postgresql']['database']
     demoQuery=demoTS['rawSql']
     counter=0
     secondCounter=1
 
     demoTS = targets[0]
-    setSites=set(sites)
-    sites=list(setSites)
-    sites.sort()
+
+    #       panelList.append(makeQuery(pars, queriesPanel,serverList, dictASes,4))
+
+    setServers=set(serverList)
+    servers=list(setServers)
+    servers.sort()
 
     #now we need to create a new demoTS for each element in k
     # and update the variables accordingly
-    for singleSite in sites:
-        if singleSite!='':
-            tempTS = demoTS.copy()
-            demoQuery = demoTS['rawSql']
-            label=singleSite
+    for singleServer in servers:
+        if singleServer!='':
+            for singleAS in dictASes.keys():
+                tempTS = demoTS.copy()
+                demoQuery = demoTS['rawSql']
+                label=dictASes[singleAS]+"-"+ singleAS +"-"+ singleServer
 
+                newQuery=demoQuery.replace("$LABEL", label)
 
-            newQuery=demoQuery.replace("$LABEL", label)
-            #print(tempSQL)
-            newQuery=newQuery.replace("$SERVER_NAME", server_name)
-            newQuery=newQuery.replace("$IPV",str(ipv))
-            newQuery = newQuery.replace("$SITE", str(singleSite))
-            tempTS['rawSql']=newQuery
-            #each line has its own id, alphabet sequence, so we need to get it
-            if counter<26:
-                tempTS['refId']=alphabet[counter]
-            else:
-                tempTS['refId']="A"+ str(secondCounter)
-                secondCounter=secondCounter+1
-            counter=counter+1
-            #print(tempTS['rawSql'])
-            newTargetList.append(tempTS)
+                newQuery=newQuery.replace("$SERVER_NAME", singleServer)
+                newQuery=newQuery.replace("$IPV",str(ipv))
+                newQuery = newQuery.replace("$AS_NAME", str(dictASes[singleAS]))
+                newQuery = newQuery.replace("$AS_NUMBER", str(singleAS))
+                tempTS['rawSql']=newQuery
+                #each line has its own id, alphabet sequence, so we need to get it
+                if counter<26:
+                    tempTS['refId']=alphabet[counter]
+                else:
+                    tempTS['refId']="A"+ str(secondCounter)
+                    secondCounter=secondCounter+1
+                counter=counter+1
+                #print(tempTS['rawSql'])
+                newTargetList.append(tempTS)
 
     firstPanel['targets'] = newTargetList
     #print(str(newTargetList))
     pg_db='debug'
     firstPanel['datasource']=pg_db
-    firstPanel['title']=firstPanel['title'].replace("$SERVER_NAME", server_name)
     firstPanel['title'] = firstPanel['title'].replace("$IPV", "IPv"+str(ipv))
 
     return firstPanel
 
-def makeServerPanels(server,sites,pars):
+def makeServerPanels(serverList,pars):
+
+
+    #first, let's create a dict with the ASes in question:
+    monitoredASes=pars['anteater']['ases_to_monitor']
+    sp=monitoredASes.split(",")
+    dictASes=dict()
+    #15169-Google, 8075-Microsoft, 16509-AWS, 14618-AWS,  32934-Facebook, 36692-OpenDNS, 13335-Cloudflare
+    for k in sp:
+        sp=k.split("-")
+        tempASN=sp[0].strip()
+        tempASNname=sp[1]
+        dictASes[tempASN]=tempASNname
+
+
 
     baseJSON=''
     with open('template/template.json') as f:
@@ -166,63 +187,49 @@ def makeServerPanels(server,sites,pars):
         rttPanel = copyBaseJSON['panels'][2]
         rttPanelV6 = copyBaseJSON['panels'][3]
 
-        resolversPanel = copyBaseJSON['panels'][4]
-        resolversPanelV6 = copyBaseJSON['panels'][5]
+        sitesPanel = copyBaseJSON['panels'][4]
+        sitesPanelV6 = copyBaseJSON['panels'][5]
 
-        asesPanel = copyBaseJSON['panels'][6]
-        asesPanelV6 = copyBaseJSON['panels'][7]
+        resolversPanel = copyBaseJSON['panels'][6]
+        resolversPanelV6 = copyBaseJSON['panels'][7]
 
-        # now, we will need to generate a v4 and v6 version for each of them
+        # nee to generate one query per AS and server
 
         panelList=[]
-        panelList.append(makeQuery(pars, queriesPanel,server, sites,4))
-        panelList.append(makeQuery(pars, queriesPanelV6, server, sites, 6))
+        panelList.append(makeQuery(pars, queriesPanel,serverList, dictASes,4))
+        panelList.append(makeQuery(pars, queriesPanelV6, serverList, dictASes, 6))
 
         #rtt
-        panelList.append(makeQuery(pars, rttPanel,server, sites,4))
-        panelList.append(makeQuery(pars, rttPanelV6, server, sites, 6))
+        panelList.append(makeQuery(pars, rttPanel,serverList, dictASes,4))
+        panelList.append(makeQuery(pars, rttPanelV6, serverList, dictASes, 6))
 
+
+        #sites
+        panelList.append(makeQuery(pars, sitesPanel, serverList, dictASes, 4))
+        panelList.append(makeQuery(pars, sitesPanelV6,serverList, dictASes, 6))
         # resolvers
-        panelList.append(makeQuery(pars, resolversPanel, server, sites, 4))
-        panelList.append(makeQuery(pars, resolversPanelV6, server, sites, 6))
+        panelList.append(makeQuery(pars, resolversPanel, serverList, dictASes,4))
+        panelList.append(makeQuery(pars, resolversPanelV6, serverList, dictASes, 6))
 
-        #ases
-        panelList.append(makeQuery(pars, asesPanel, server, sites, 4))
-        panelList.append(makeQuery(pars, asesPanelV6, server, sites, 6))
 
 
         localPanel['panels'] = panelList
-        localPanel['title']= server +" Sites Monitoring"
         localPanel['uid']= id_generator()
 
-        with open('export/' + server+ '.json', 'w') as aus:
+        with open('export/ases.json', 'w') as aus:
             #print(str(baseJSON))
             json.dump(localPanel,aus)
             aus.close()
-        print("Dashboard generated. Import export/"  + server+ ".json into Grafana and enjoy it !")
+        print("Dashboard generated. Import export/ases.json into Grafana and enjoy it !")
 
 
 def main():
 
     pars=read_ini()
+    #list with sever_name,ipv
     server_names = get_server_names(pars)
-    servers=set()
-    serverSite=dict()
 
-    for k in server_names:
-        sp=k.split('|')
-        localServer=sp[0].strip()
-        servers.add(localServer)
-        site=sp[1]
-        if localServer not in serverSite:
-            serverSite[localServer]=[]
-
-        tempArray=serverSite[localServer]
-        tempArray.append(site)
-        serverSite[localServer]=tempArray
-
-    for eachServer in servers:
-        jsonFile=makeServerPanels(eachServer,serverSite[eachServer],pars)
+    jsonFile=makeServerPanels(server_names,pars)
 
 
 if __name__ == "__main__":
