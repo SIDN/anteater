@@ -10,9 +10,9 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
 
 
 ## Status
-* 2021-03-02: **The first dashboard** is operational!  See [demo.md](src/grafana-dashboards/demo/demo.md) for more!
+* 2021-03-04: **The second dashboard** is operational, which monitors anycast sites. See [demo.md](src/grafana-dashboards/demo/demo.md) for more!
+* 2021-03-02: **The first dashboard** is operational!  
   * We will keep on adding more dashboards in the coming days, namely:
-    1. One dashboard per authoritative server
     1. One dashboard for HyperGiants and your favorite ASes
 
 ## To install it
