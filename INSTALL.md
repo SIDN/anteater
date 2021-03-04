@@ -78,8 +78,9 @@ and your `ENTRADA` server
 ## 3. Run the scripts
 * configure `cron` to run the scripts below *EVERY hour*:
     * `python stats_per_server.py`
-    * this script will pull stats per each authoritative server and IP version
-  
+    * `python stats_per_site`
+    * `python stats_per_as.py`
+ 
     
   
 ## 4. Configure `Grafana`
