@@ -4,6 +4,12 @@ import sys
 import configparser
 import string
 from datetime import date, timedelta
+import string
+import random
+
+
+def id_generator(size=9, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
+     return ''.join(random.choice(chars) for _ in range(size))
 
 
 def conn_impala():
@@ -40,9 +46,6 @@ def get_server_names(pars):
     year = int(year)
     month = int(month)
     day = int(day)
-
-
-
 
     entrada_db_table = pars['entrada']['database'] + "." + pars['entrada']['table']
 
@@ -190,6 +193,7 @@ def makeServerPanels(server,sites,pars):
 
         localPanel['panels'] = panelList
         localPanel['title']= server +" Sites Monitoring"
+        localPanel['uid']= id_generator()
 
         with open('export/' + server+ '.json', 'w') as aus:
             #print(str(baseJSON))
