@@ -76,11 +76,8 @@ CREATE TABLE rt_results (
 and your `ENTRADA` server
   
 ## 3. Run the scripts
-* configure `cron` to run the scripts below *EVERY hour*:
-    * `python stats_per_server.py`
-    * `python stats_per_site`
-    * `python stats_per_as.py`
- 
+* configure `cron` to run the script below **EVERY hour**, which is under `src`:
+    * `python anteater.py`
     
   
 ## 4. Configure `Grafana`
