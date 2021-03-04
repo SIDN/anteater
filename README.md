@@ -9,8 +9,10 @@ We presented `Anteater` recently at:
 We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year now.
 
 
-## Status
-* 2021-03-04: **The second dashboard** is operational, which monitors anycast sites. See [demo.md](src/grafana-dashboards/demo/demo.md) for more!
+## Changelog
+
+* 2021-03-04: **The third dashboard** is operational, which monitors individual ASes. See [demo.md](src/grafana-dashboards/demo/demo.md) for more
+* 2021-03-04: **The second dashboard** is operational, which monitors anycast sites. See [demo.md](src/grafana-dashboards/demo/demo.md) for more
 * 2021-03-02: **The first dashboard** is operational!  
   * We will keep on adding more dashboards in the coming days, namely:
     1. One dashboard for HyperGiants and your favorite ASes
