@@ -123,7 +123,7 @@ def makeQuery(pars,firstPanel,server_name,sites,ipv):
         if singleSite!='':
             tempTS = demoTS.copy()
             demoQuery = demoTS['rawSql']
-            label=singleSite+"-IPv"+str(ipv)
+            label=singleSite
 
 
             newQuery=demoQuery.replace("$LABEL", label)
