@@ -76,12 +76,13 @@ CREATE TABLE rt_results (
 and your `ENTRADA` server
   
 ## 3. Run the scripts
-* configure `cron` to run the script below **EVERY hour**, which is under `src`:
+* configure `cron` to run the script below using the same frequency you specify in [anteater.ini](src/anteater.ini):
     * `python anteater.py`
     
   
 ## 4. Configure `Grafana`
 
+* **Note**: you need to do this only once, or whenever you update `anteater.ini` or more sites are added to your anycast services.
 * Anteater uses [Grafana](https://grafana.com/) as visualization tool, so you'll need to set it up  
   * (we do not cover  it here, but follow [Configuring Grafana](https://grafana.com/docs/grafana/latest/administration/configuration/)
  to learn how to do it)
