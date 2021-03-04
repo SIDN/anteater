@@ -178,9 +178,12 @@ def run_query(entradaQuery, pars):
     return results
 
 
-def main(pars):
+def main():
+    config_parameters = read_ini()
+
+
     print("starting to pull stats per AS data from ENTRADA")
-    results = as_stats(pars)
+    results = as_stats(config_parameters)
     print("starting to store start per AS data on  Postgresql")
     store = store_as_stats(results)
 
@@ -194,6 +197,4 @@ if __name__ == "__main__":
 
 
     else:
-
-        config_parameters = read_ini()
-        run = main(config_parameters)
+        run = main()

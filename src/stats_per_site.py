@@ -151,9 +151,11 @@ def run_query_sites(entradaQuery, pars):
     return results
 
 
-def main(pars):
+def main():
+    config_parameters = read_ini()
+
     print("starting to pull stats per site data from ENTRADA")
-    results = site_stats(pars)
+    results = site_stats(config_parameters)
     print("starting to store start per site data on  Postgresql")
     store = store_site_stats(results)
 
@@ -166,6 +168,5 @@ if __name__ == "__main__":
         print("Usage:  stats_per_server.py")
 
     else:
+        run = main()
 
-        config_parameters = read_ini()
-        run = main(config_parameters)
