@@ -8,8 +8,12 @@ to generate dashdoards as below:
 
 ## 2. Dashboard per authoritative server (sites)
 
-* TODO
-
+ * The `stats_per_site.py` script populates the database, which can be used
+to generate dashdoards as below.
+ * **Note**: this script generates **1 dashboard** per authoritative server  
+   
+![Authoritative Server and sites Dashboard](site-screenshot.png)
+ 
 ## 3. Hypergiants and favorite ASes
 
 * TODO

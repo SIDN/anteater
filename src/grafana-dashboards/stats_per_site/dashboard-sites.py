@@ -205,10 +205,7 @@ def makeServerPanels(server,sites,pars):
 def main():
 
     pars=read_ini()
-
     server_names = get_server_names(pars)
-
-
     servers=set()
     serverSite=dict()
 
@@ -223,8 +220,7 @@ def main():
         tempArray=serverSite[localServer]
         tempArray.append(site)
         serverSite[localServer]=tempArray
-    
-    
+
     for eachServer in servers:
         jsonFile=makeServerPanels(eachServer,serverSite[eachServer],pars)
 
@@ -238,4 +234,3 @@ if __name__ == "__main__":
     else:
 
         z=main()
-
