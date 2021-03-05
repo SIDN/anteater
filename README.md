@@ -11,6 +11,12 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
 ## To install it
 * Read  [INSTALL.md](INSTALL.md) for how to configure it
 
+
+## Demo (screenshots):
+
+* See [demo.md](src/grafana-dashboards/demo/demo.md)  for your dashboards will look like
+
+
 ## Changelog
 
 * 2021-03-04: Fully automated via `src/anteater.py`.
