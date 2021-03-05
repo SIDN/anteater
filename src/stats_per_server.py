@@ -136,7 +136,7 @@ def run_query(entradaQuery, pars):
             ases = str(k[4])
             rtt = k[5]
             try:
-                rtt = float(sp[7])
+                rtt = float(rtt)
             except:
                 rtt = None
             key = server + "-ipv" + ipv

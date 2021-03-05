@@ -140,7 +140,7 @@ def run_query_sites(entradaQuery, pars):
             ases = str(k[5])
             rtt = k[6]
             try:
-                rtt = float(sp[7])
+                rtt = float(rtt)
             except:
                 rtt = None
             value = server + "," + str(ipv) + "," + site + "," + str(nqueries) + "," + str(resolvers) + "," + str(
