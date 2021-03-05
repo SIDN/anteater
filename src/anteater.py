@@ -5,17 +5,30 @@ import sys
 
 def runIT():
     print("start running stats per Server")
-    runServer()
-    print("done")
+    try:
+        runServer()
+        print("done")
+    except:
+        print("ERROR with running runServer")
 
     print("start running stats per site")
-    runSite()
-    print('done')
+    try:
+        runSite()
+        print("done")
+    except:
+        print("ERROR with running runSite")
+
 
     print("start running stats per AS")
-    runAS()
-    print("DONE. Anteater will exit now.")
+    try:
+        runAS()
+        print("done")
 
+    except:
+        print("ERROR runAS")
+
+
+    print("DONE. Anteater will exit now.")
 if __name__ == "__main__":
 
     if len(sys.argv) != 1:

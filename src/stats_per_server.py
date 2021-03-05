@@ -135,8 +135,10 @@ def run_query(entradaQuery, pars):
             resolvers = str(k[3])
             ases = str(k[4])
             rtt = k[5]
-            rtt = str(rtt).strip()
-            rtt = float(rtt)
+            try:
+                rtt = float(sp[7])
+            except:
+                rtt = None
             key = server + "-ipv" + ipv
             value = server + "," + str(ipv) + "," + str(nqueries) + "," + str(resolvers) + "," + str(ases) + "," + str(
                 rtt)
