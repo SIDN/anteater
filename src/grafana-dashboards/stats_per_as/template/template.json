@@ -70,7 +70,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  queries AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  queries AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -186,7 +186,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  queries AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  queries AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -302,7 +302,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -418,7 +418,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  avg_rtt AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -534,7 +534,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  sites AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  sites AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -650,7 +650,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  sites AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  sites AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -766,7 +766,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -882,7 +882,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND\n  ipv= $IPV\nORDER BY 1",
+          "rawSql": "SELECT\n  epoch_time AS \"time\",\n  resolvers AS \"$AS_NAME-$AS_NUMBER-$SERVER_NAME_$IPV\"\nFROM ASes\nWHERE\n  $__timeFilter(epoch_time) AND\n  asn = '$AS_NUMBER' AND  server_name='$SERVER_NAME'  AND \n  ipv= $IPV\nORDER BY 1",
           "refId": "A",
           "select": [
             [
