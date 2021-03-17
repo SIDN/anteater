@@ -11,6 +11,11 @@ We have been using `Anteater` at [SIDN](https://sidn.nl) for more than 1 year no
 ## To install it
 * Read  [INSTALL.md](INSTALL.md) for how to configure it
 
+## To run it for on specific date:
+  * Say you had an issue with your `ENTRADA` data, and when you ran `anteater` the data was incomplete.
+  * You can re-run now `anteater` for any given date: simply run `rerun_for_given_date.py`, using as parameter the day you want, as `python rerun_for_given_date.py 20210310`
+    * The command above will **delete** from PostgreSQL all data for the specified date (2021-03-10)
+    * Then, it will re-run  queries agian for this specific day,and repopulate the database based on now complete data from  `ENTRADA`.
 
 ## Demo (screenshots):
 
