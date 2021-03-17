@@ -57,7 +57,7 @@ def store_site_stats(arrayResults):
         outz.write(k + "\n")
     outz.close()
 
-    print(' start to store on postgresql')
+    #print(' start to store on postgresql')
     conn = -1
     try:
 
@@ -84,7 +84,12 @@ def store_site_stats(arrayResults):
                 queries = int(sp[4])
                 resolvers = int(sp[5])
                 ases = int(sp[6])
-                rtt = float(sp[7])
+                rtt=sp[7]
+                try:
+                    rtt = float(rtt)
+                except:
+                    rtt = None
+
                 query = " INSERT INTO anycastsites (epoch_time, server_name, server_site,ipv, nqueries, resolvers,ases, avg_rtt) " \
                         "VALUES (%s, %s, %s, %s, %s, %s, %s,%s)"
                 cur.execute(query, (ts, server, site, ipv, queries, resolvers, ases, rtt))
@@ -126,7 +131,7 @@ def run_query_sites(entradaQuery, pars):
     results = []
     if cursor != 1:
 
-        print('start to retrieve row  of cursor')
+        #print('start to retrieve row  of cursor')
         '''  select server,ipv, server_location, count(1) as nqueries, count(distinct(src)) as resolvers,
            count(distinct(asn)) as asn,  avg(tcp_hs_rtt)from entrada.dns 
         where year='''
