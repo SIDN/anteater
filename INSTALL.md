@@ -77,7 +77,14 @@ and your `ENTRADA` server
   
 ## 3. Run the scripts
 * configure `cron` to run the script below using the same frequency you specify in [anteater.ini](src/anteater.ini):
-    * `python anteater.py`
+    * `python anteater.py
+   
+### 3.1 To run it for on specific date:
+  * Say you had an issue with your `ENTRADA` data, and when you ran `anteater` the data was incomplete.
+  * You can re-run now `anteater` for any given date: simply run `rerun_for_given_date.py`, using as parameter the day you want, as `python rerun_for_given_date.py 20210310`
+    * The command above will **delete** from PostgreSQL all data for the specified date (2021-03-10)
+    * Then, it will re-run  queries agian for this specific day,and repopulate the database based on now complete data from  `ENTRADA`.
+
     
   
 ## 4. Configure `Grafana`
